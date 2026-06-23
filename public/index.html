@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PRC Editor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>PRC Editor</h1>
+
+<div class="box">
+    <h2>PRC → XML</h2>
+
+    <form
+        action="/convert-to-xml"
+        method="post"
+        enctype="multipart/form-data">
+
+        <input type="file" name="file" accept=".prc">
+        <button type="submit">
+            Convert
+        </button>
+    </form>
+</div>
+
+<div class="box">
+    <h2>XML → PRC</h2>
+
+    <form
+        action="/convert-to-prc"
+        method="post"
+        enctype="multipart/form-data">
+
+        <input type="file" name="file" accept=".xml">
+        <button type="submit">
+            Convert
+        </button>
+    </form>
+</div>
+
+</body>
+</html>
