@@ -1,0 +1,7 @@
+npm install
+
+curl -L https://github.com/enswapwar/Paramxml-web/releases/download/te/ParamXML -o ParamXML
+
+chmod +x ParamXML
+
+./ParamXML --help || true
