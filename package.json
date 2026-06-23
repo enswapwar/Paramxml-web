@@ -1,9 +1,13 @@
 {
-  "name": "paramxml-web",
+  "name": "prc-editor",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "postinstall": "curl -L https://github.com/enswapwar/Paramxml-web/releases/download/te/ParamXML -o ParamXML && chmod +x ParamXML",
     "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
   }
 }
