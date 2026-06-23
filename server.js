@@ -1,19 +1,57 @@
-const http = require("http");
+const express = require("express");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 const { execFile } = require("child_process");
 
-const server = http.createServer((req, res) => {
-    execFile("./ParamXML", [], (err, stdout, stderr) => {
-        res.writeHead(200, {
-            "Content-Type": "text/plain; charset=utf-8"
-        });
+const app = express();
 
-        if (err) {
-            res.end(String(err) + "\n" + stderr);
-            return;
-        }
+app.use(express.static("public"));
 
-        res.end(stdout || stderr);
-    });
+const upload = multer({
+    dest: "uploads/"
 });
 
-server.listen(process.env.PORT || 3000);
+app.post("/convert-to-xml", upload.single("file"), (req, res) => {
+    const input = req.file.path;
+    const output = input + ".xml";
+
+    execFile(
+        "./ParamXML",
+        [input, "-d", "-o", output],
+        (err, stdout, stderr) => {
+            if (err) {
+                console.error(stderr);
+                return res.status(500).send(stderr);
+            }
+
+            res.download(output, "output.xml", () => {
+                fs.rmSync(input, { force: true });
+                fs.rmSync(output, { force: true });
+            });
+        }
+    );
+});
+
+app.post("/convert-to-prc", upload.single("file"), (req, res) => {
+    const input = req.file.path;
+    const output = input + ".prc";
+
+    execFile(
+        "./ParamXML",
+        [input, "-a", "-o", output],
+        (err, stdout, stderr) => {
+            if (err) {
+                console.error(stderr);
+                return res.status(500).send(stderr);
+            }
+
+            res.download(output, "output.prc", () => {
+                fs.rmSync(input, { force: true });
+                fs.rmSync(output, { force: true });
+            });
+        }
+    );
+});
+
+app.listen(process.env.PORT || 3000);
