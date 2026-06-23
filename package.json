@@ -1,7 +1,9 @@
-npm install
-
-curl -L https://github.com/enswapwar/Paramxml-web/releases/download/te/ParamXML -o ParamXML
-
-chmod +x ParamXML
-
-./ParamXML --help || true
+{
+  "name": "paramxml-web",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "postinstall": "curl -L https://github.com/enswapwar/Paramxml-web/releases/download/te/ParamXML -o ParamXML && chmod +x ParamXML",
+    "start": "node server.js"
+  }
+}
